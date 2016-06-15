@@ -20,27 +20,30 @@ function pageLoad() {
 $("a.new").click(newGame);
 
 function newGame() {
-	for (var feedback = "#feedback") {
+	var feedback = $("#feedback").val(),
 		feedback = "Start guessing!";
-	}
-	guessCount();
+	counter = "0";
 	$("ul").empty();
 	generateNumber();
 }
 
 // evaluate user input
-$("#guessButton").click(validateGuess, userFeedback);
+$("#guessButton").click() {
+	validateGuess();
+	userFeedback();
+	guessCount();
+	trackGuesses();
+}
 
 // validate user input
 function validateGuess() {
-	for (var userGuess = "#userGuess") {
+	var userGuess = $("#userGuess").val(); 
 		if(userGuess !== Number) {
 			alert("Please enter a number!");
 		}
 		if(userGuess < 1 || userGuess > 100) {
 			alert("Please enter a number between 1 and 100!");
 		}
-	}	
 }
 
 // provide user feedback
@@ -64,7 +67,13 @@ function userFeedback() {
 
 // track guess count
 function guessCount() {
-	count++;
+	var counter = $("#count").val();
+	counter++;
+}
+
+// track guesses
+function trackGuesses() {
+	$("#guessList").append(<li> + #userGuess.val() + </li>);
 }
 
 // notify winner
