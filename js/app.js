@@ -14,31 +14,33 @@ function pageLoad() {
   	});
 
   	newGame();
-}
 
-// start new game
-$("a.new").click(newGame);
+  	// start new game
+	$("a.new").click(newGame);
+}
 
 function newGame() {
 	var feedback = $("#feedback").val(),
 		feedback = "Start guessing!";
-	counter = "0";
+	$("#count").val('');
 	$("ul").empty();
 	generateNumber();
 }
 
 // evaluate user input
-$("#guessButton").click() {
+function evaluateInput() {
 	validateGuess();
 	userFeedback();
 	guessCount();
 	trackGuesses();
 }
 
+$("#guessButton").click(evaluateInput);	
+
 // validate user input
 function validateGuess() {
 	var userGuess = $("#userGuess").val(); 
-		if(userGuess !== Number) {
+		if(isNaN(userGuess)) {
 			alert("Please enter a number!");
 		}
 		if(userGuess < 1 || userGuess > 100) {
@@ -52,16 +54,16 @@ function userFeedback() {
 		win();
 	}
 	else if (Math.abs(validateGuess - generateNumber) < 10) {
-		feedback = "Sizzling!";
+		$("#feedback").val() == "Sizzling!";
 	}
 	else if (Math.abs(validateGuess - generateNumber) < 20) {
-		feedback = "Hot!";
+		$("#feedback").val() == "Hot!";
 	}
 	else if (Math.abs(validateGuess - generateNumber) < 30) {
-		feedback = "Lukewarm!";
+		$("#feedback").val() == "Lukewarm!";
 	}
 	else {
-		feedback = "Ice Cold!";
+		$("#feedback").val() == "Ice Cold!";
 	}
 }
 
@@ -73,7 +75,7 @@ function guessCount() {
 
 // track guesses
 function trackGuesses() {
-	$("#guessList").append(<li> + #userGuess.val() + </li>);
+	$("#guessList").append("<li>" + $("#userGuess").val() + "</li>");
 }
 
 // notify winner
