@@ -20,18 +20,33 @@ function pageLoad() {
 $("a.new").click(newGame);
 
 function newGame() {
-	//'Make your guess!'  #feedback
-	//Guess counter == 0
-	//Clear <li>
+	for (var feedback = "#feedback") {
+		feedback = "Start guessing!";
+	}
+	guessCount();
+	$("ul").empty();
 	generateNumber();
 }
 
 // evaluate user input
-$("#guessButton").click(userGuess);
+$("#guessButton").click(validateGuess, userFeedback);
 
-function userGuess() {
-	if (validateGuess == generateNumber) {
-		feedback = "Winner!";
+// validate user input
+function validateGuess() {
+	for (var userGuess = "#userGuess") {
+		if(userGuess !== Number) {
+			alert("Please enter a number!");
+		}
+		if(userGuess < 1 || userGuess > 100) {
+			alert("Please enter a number between 1 and 100!");
+		}
+	}	
+}
+
+// provide user feedback
+function userFeedback() {
+	if (userGuess == generateNumber) {
+		win();
 	}
 	else if (Math.abs(validateGuess - generateNumber) < 10) {
 		feedback = "Sizzling!";
@@ -47,24 +62,16 @@ function userGuess() {
 	}
 }
 
-// validate user input
-function validateGuess() {
-	if(userGuess !== Number) {
-		alert("Please enter a number!");
-	}
-	if(userGuess < 1 || userGuess > 100) {
-		alert("Please enter a number between 1 and 100!");
-	}
-}
-
-// provide user feedback
-
 // track guess count
 function guessCount() {
 	count++;
 }
 
 // notify winner
+function win() {
+	feedback = "Winner! You guessed correctly! Click New Game to play again.";
+	$("#guessButton").hide();
+}
 
 // generate secret random number
 function generateNumber() {
