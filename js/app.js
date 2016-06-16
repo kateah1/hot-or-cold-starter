@@ -16,16 +16,11 @@ function pageLoad() {
   	newGame();
 }
 
-// start new game
-	$("a.new").click(newGame);
-
 var secretNum = Math.floor((Math.random() * 100) + 1);
 var prevGuess = [];
 
-// generate secret random number
-function generateNumber() {
-	secretNum;
-}
+// start new game
+	$("a.new").click(newGame);
 
 function newGame() {
 	$("#feedback").text("Start guessing!");
@@ -35,12 +30,18 @@ function newGame() {
 	generateNumber();
 }
 
+// generate secret random number
+function generateNumber() {
+	secretNum;
+}
+
+// when user clicks Guess
+$("#guessButton").click(evaluateInput);	
+
 // evaluate user input
 function evaluateInput() {
 	validateGuess();
 }
-
-$("#guessButton").click(evaluateInput);	
 
 // validate user input
 function validateGuess() {
@@ -67,7 +68,7 @@ function validateGuess() {
 // provide user feedback
 function userFeedback() {
 
-	if(userGuess == secretNum) {
+	if(userGuess === secretNum) {
 		win();
 	}
 	else if(Math.abs(userGuess - secretNum) < 10) {
@@ -87,8 +88,8 @@ function userFeedback() {
 // track guess count
 function guessCount() {
 
-	var counter = $("#count").val();
-	counter++;
+	var counter = $("#count").text();
+	(counter) + 1;
 }
 
 // track guesses
