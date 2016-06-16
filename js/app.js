@@ -19,10 +19,17 @@ function pageLoad() {
 // start new game
 	$("a.new").click(newGame);
 
+var secretNum = Math.floor((Math.random() * 100) + 1);
+var prevGuess = [];
+
+// generate secret random number
+function generateNumber() {
+	secretNum;
+}
+
 function newGame() {
-	var feedback = $("#feedback").val(),
-		feedback = "Start guessing!";
-	$("#count").val('');
+	$("#feedback").text("Start guessing!");
+	$("#count").text("0");
 	$("#guessList").empty();
 	$("#userGuess").val('');
 	generateNumber();
@@ -31,10 +38,6 @@ function newGame() {
 // evaluate user input
 function evaluateInput() {
 	validateGuess();
-	userFeedback();
-	guessCount();
-	trackGuesses();
-	$("#userGuess").val('');
 }
 
 $("#guessButton").click(evaluateInput);	
@@ -42,33 +45,42 @@ $("#guessButton").click(evaluateInput);
 // validate user input
 function validateGuess() {
 	var userGuess = $("#userGuess").val(); 
-		if(isNaN(userGuess)) {
-			alert("Please enter a number!");
+		for(var i = 0; i < prevGuess.length; i++) {
+			if(prevGuess[i] === userGuess) {
+				return alert("You have already guessed that number!");
+			}	
 		}
-		if(userGuess < 1 || userGuess > 100) {
-			alert("Please enter a number between 1 and 100!");
+		if(isNaN(userGuess)) {
+			return alert("Please enter a number!");
+		}
+		else if(userGuess < 1 || userGuess > 100) {
+			return alert("Please enter a number between 1 and 100!");
+		}
+		else {
+			userFeedback();
+			guessCount();
+			trackGuesses();
+			$("#userGuess").val('');
 		}
 }
 
 // provide user feedback
 function userFeedback() {
 
-	var secretNum = Math.floor((Math.random() * 100) + 1);
-
 	if(userGuess == secretNum) {
 		win();
 	}
 	else if(Math.abs(userGuess - secretNum) < 10) {
-		$("#feedback").val("Sizzling!");
+		$("#feedback").text("Sizzling!");
 	}
 	else if(Math.abs(userGuess - secretNum) < 20) {
-		$("#feedback").val("Hot!");
+		$("#feedback").text("Hot!");
 	}
 	else if(Math.abs(userGuess - secretNum) < 30) {
-		$("#feedback").val("Lukewarm!");
+		$("#feedback").text("Lukewarm!");
 	}
 	else {
-		$("#feedback").val("Ice Cold!");
+		$("#feedback").text("Ice Cold!");
 	}
 }
 
@@ -86,12 +98,9 @@ function trackGuesses() {
 
 // notify winner
 function win() {
-	$("#feedback").val("Winner! You guessed correctly! Click New Game to play again.");
+	$("#feedback").text("Winner! You guessed correctly! Click New Game to play again.");
 	$("#guessButton").hide();
 }
 
-// generate secret random number
-function generateNumber() {
-	var secretNum = Math.floor((Math.random() * 100) + 1);
-}
+
 
