@@ -19,56 +19,46 @@ function pageLoad() {
 var secretNum = Math.floor((Math.random() * 100) + 1);
 var prevGuess = [];
 
-// start new game
-	$("a.new").click(newGame);
-
+// New Game
 function newGame() {
+	$("#guessButton").show();
 	$("#feedback").text("Start guessing!");
+	$("#userGuess").val("");
 	$("#count").text("0");
 	$("#guessList").empty();
-	$("#userGuess").val('');
-	generateNumber();
+	generateNum();
 }
 
-// generate secret random number
-function generateNumber() {
+// Generate Secret Random Number
+function generateNum() {
 	secretNum;
 }
 
-// when user clicks Guess
-$("#guessButton").click(evaluateInput);	
+// When Guess Button is Clicked, Check if Valid Number
+$("#guessButton").click(validateGuess);
 
-// evaluate user input
-function evaluateInput() {
-	validateGuess();
+function validateGuess(userGuess) {
+	var userGuess = $("#userGuess").val();
+	for(var i = 0; i < prevGuess.length; i++) {
+		if(userGuess === prevGuess[i]) {
+			return alert("You've already guessed that number!");
+		}
+	}	
+	if(isNaN(userGuess) || userGuess < 1 || userGuess > 100) {
+		return alert("Please enter a valid integer between 1 and 100!")
+	}
+	else {
+		userFeedback();
+		guessCount();
+		guessList();
+		$("#userGuess").val("");
+	}
 }
 
-// validate user input
-function validateGuess() {
-	var userGuess = $("#userGuess").val(); 
-		for(var i = 0; i < prevGuess.length; i++) {
-			if(prevGuess[i] === userGuess) {
-				return alert("You have already guessed that number!");
-			}	
-		}
-		if(isNaN(userGuess)) {
-			return alert("Please enter a number!");
-		}
-		else if(userGuess < 1 || userGuess > 100) {
-			return alert("Please enter a number between 1 and 100!");
-		}
-		else {
-			userFeedback();
-			guessCount();
-			trackGuesses();
-			$("#userGuess").val('');
-		}
-}
-
-// provide user feedback
-function userFeedback() {
-
-	if(userGuess === secretNum) {
+// Provide Feedback of User Guess Relative to Secret Number
+function userFeedback(userGuess) {
+	var userGuess = $("#userGuess").val();
+	if(userGuess == secretNum) {
 		win();
 	}
 	else if(Math.abs(userGuess - secretNum) < 10) {
@@ -85,23 +75,24 @@ function userFeedback() {
 	}
 }
 
-// track guess count
+// Keep Track of the Number of User Guesses
 function guessCount() {
-
-	var counter = $("#count").text();
-	(counter) + 1;
+	$("span#count").text("5");
 }
 
-// track guesses
-function trackGuesses() {
+// Keep Track in a List the Numbers the User has Guessed
+function guessList() {
+	prevGuess.push($("#userGuess").val());
 	$("#guessList").append("<li>" + $("#userGuess").val() + "</li>");
 }
 
-// notify winner
+//User has Won the Game
 function win() {
 	$("#feedback").text("Winner! You guessed correctly! Click New Game to play again.");
 	$("#guessButton").hide();
 }
 
+// Start a New Game
+$("a.new").click(newGame);
 
 
