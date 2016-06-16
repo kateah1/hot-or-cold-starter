@@ -24,6 +24,7 @@ function newGame() {
 		feedback = "Start guessing!";
 	$("#count").val('');
 	$("#guessList").empty();
+	$("#userGuess").val('');
 	generateNumber();
 }
 
