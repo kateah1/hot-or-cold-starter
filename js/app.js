@@ -18,6 +18,7 @@ function pageLoad() {
 
 var secretNum = Math.floor((Math.random() * 100) + 1);
 var prevGuess = [];
+var counter = 0;
 
 // New Game
 function newGame() {
@@ -49,7 +50,6 @@ function validateGuess(userGuess) {
 	}
 	else {
 		userFeedback();
-		guessCount();
 		guessList();
 		$("#userGuess").val("");
 	}
@@ -75,13 +75,10 @@ function userFeedback(userGuess) {
 	}
 }
 
-// Keep Track of the Number of User Guesses
-function guessCount() {
-	$("span#count").text("5");
-}
-
 // Keep Track in a List the Numbers the User has Guessed
 function guessList() {
+	counter++;
+	$("#count").text(counter);
 	prevGuess.push($("#userGuess").val());
 	$("#guessList").append("<li>" + $("#userGuess").val() + "</li>");
 }
