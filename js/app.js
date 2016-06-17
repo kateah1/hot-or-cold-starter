@@ -13,7 +13,6 @@ function pageLoad() {
   		$('.overlay').fadeOut(1000);
   	});
 
-  	newGame();
 }
 
 var secretNum = Math.floor((Math.random() * 100) + 1);
@@ -27,6 +26,7 @@ function newGame() {
 	$("#userGuess").val("");
 	$("#count").text("0");
 	$("#guessList").empty();
+	prevGuess = [];
 	generateNum();
 }
 
@@ -56,7 +56,7 @@ function validateGuess(userGuess) {
 }
 
 // Provide Feedback of User Guess Relative to Secret Number
-function userFeedback(userGuess) {
+function userFeedback() {
 	var userGuess = $("#userGuess").val();
 	if(userGuess == secretNum) {
 		win();
