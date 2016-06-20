@@ -38,7 +38,7 @@ function generateNum() {
 // When Guess Button is Clicked, Check if Valid Number
 $("#guessButton").click(validateGuess);
 
-function validateGuess(userGuess) {
+function validateGuess() {
 	var userGuess = $("#userGuess").val();
 	for(var i = 0; i < prevGuess.length; i++) {
 		if(userGuess === prevGuess[i]) {
